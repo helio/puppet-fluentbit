@@ -3,8 +3,9 @@
 # A description of what this class does
 #
 # @example
-#   include fluentbit::input::syslog
-class fluentbit::input::syslog(
+# == Define: define_name
+#
+define fluentbit::input::syslog(
   Optional[String] $mode = 'unix_udp',
   Optional[String] $listen = $mode ? {
     tcp => '0.0.0.0',
