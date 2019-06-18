@@ -5,12 +5,11 @@
 # @example
 #   include fluentbit::input
 class fluentbit::input (
-    Optional[Hash] $plugins = { 'syslog' => {},}
+    Optional[Hash] $input_plugins = { 'syslog' => { mode => unix_udp, }},
   ){
-    $plugins.each | String $plugin, Hash $attributes | {
-      Resource[fluentbit::inputs] {
+    $input_plugins.each | String $plugin, Hash $attributes | {
+      Resource["fluentbit::input::${plugin}"] {
         $plugin: * => $attributes;
-        default:   * => $defaults;
       }
     }
   }

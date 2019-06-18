@@ -2,9 +2,12 @@
 #
 # A description of what this class does
 #
+# @params TODO
+#
 # @example
-#   include fluentbit::input::syslog
-class fluentbit::input::syslog(
+# == Define: define_name
+#
+define fluentbit::input::syslog(
   Optional[String] $mode = 'unix_udp',
   Optional[String] $listen = $mode ? {
     tcp => '0.0.0.0',
@@ -24,6 +27,7 @@ class fluentbit::input::syslog(
   Optional[String] $rsyslog_config = '/etc/rsyslog.d/60-fluent-bit.conf',
 ) {
   # create input_syslog.conf
+  # TODO: concat for multiple entries
   file { $configfile:
     ensure  => file,
     mode    => '0644',
