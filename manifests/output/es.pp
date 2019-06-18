@@ -71,11 +71,12 @@ define fluentbit::output::es (
   Optional[String] $http_user   = undef,
   Optional[String] $http_passwd = undef,
 ) {
-# create output_es.conf
-# TODO: concat for multiple entries
-file { $configfile:
-  ensure  => file,
-  mode    => '0644',
-  content => template('fluentbit/input/es.conf.erb'),
-  notify  => Service['td-agent-bit'], # TODO: get service name from params.pp
+  # create output_es.conf
+  # TODO: concat for multiple entries
+  file { $configfile:
+    ensure  => file,
+    mode    => '0644',
+    content => template('fluentbit/input/es.conf.erb'),
+    notify  => Service['td-agent-bit'], # TODO: get service name from params.pp
+  }
 }
