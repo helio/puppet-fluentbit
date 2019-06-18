@@ -53,8 +53,8 @@ class fluentbit::config(
   file { $configfile:
     ensure  => file,
     mode    => '0644',
-    content => template('td-agent-bit.conf.erb'),
-    notify  => Service['td-agent-bit'],
+    content => template('fluentbit/td-agent-bit.conf.erb'),
+    notify  => Service['td-agent-bit'], # TODO: get service name from params
   }
   # create service resource
   # create input resource
