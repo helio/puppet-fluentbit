@@ -3,8 +3,8 @@
 # A description of what this class does
 #
 # @example
-#   include fluentbit::ouptput
-class fluentbit::ouptput {
+#   include fluentbit::output
+class fluentbit::output (
   Optional[Hash] $output_plugins = { 'es' => { }},
 ){
   $output_plugins.each | String $plugin, Hash $attributes | {
