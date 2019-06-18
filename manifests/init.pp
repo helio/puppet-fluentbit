@@ -6,13 +6,11 @@
 # @example
 #   include fluentbit
 class fluentbit(
-  Enum['present', 'absent'] $ensure,
   Boolean $manage_package_repo = true,
   ) {
   # configures repo if enabled
   if $manage_package_repo {
     class{'fluentbit::repo':
-      ensure => $ensure,
       before => Class['fluentbit::install']
     }
   }
