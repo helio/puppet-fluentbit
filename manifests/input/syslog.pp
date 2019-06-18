@@ -2,6 +2,8 @@
 #
 # A description of what this class does
 #
+# @params TODO
+#
 # @example
 # == Define: define_name
 #
@@ -25,6 +27,7 @@ define fluentbit::input::syslog(
   Optional[String] $rsyslog_config = '/etc/rsyslog.d/60-fluent-bit.conf',
 ) {
   # create input_syslog.conf
+  # TODO: concat for multiple entries
   file { $configfile:
     ensure  => file,
     mode    => '0644',
