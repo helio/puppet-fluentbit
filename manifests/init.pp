@@ -1,10 +1,11 @@
 # @summary Installs and configures fluentbit
 #
-# @param manage_package_repo Installs the package repositories
-# @param ensure Add or remove the software
-#
 # @example
 #   include fluentbit
+# @see https://docs.fluentbit.io/manual/
+#
+# @param manage_package_repo Installs the package repositories
+# @param ensure Add or remove the software
 class fluentbit(
   Boolean $manage_package_repo = true,
   ) {
