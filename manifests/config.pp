@@ -56,7 +56,4 @@ class fluentbit::config(
     content => template('fluentbit/td-agent-bit.conf.erb'),
     notify  => Service['td-agent-bit'], # TODO: get service name from params
   }
-  # create service resource
-  # create input resource
-  # create output resource
 }
