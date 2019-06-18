@@ -2,30 +2,36 @@
   "name": "helio-fluentbit",
   "version": "0.1.0",
   "author": "Kevin Häfeli",
-  "summary": "",
+  "summary": "Installs and manages Fluentbit for Debian and Ubuntu",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/helio/puppet-fluentbit",
+  "project_page": "https://github.com/helio/puppet-fluentbit",
+  "issues_url": "https://github.com/helio/puppet-fluentbit/issues",
   "dependencies": [
-
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.24.0 < 6.0.0" },
+    { "name": "puppetlabs/apt", "version_requirement": ">= 4.5.1 < 7.0.0" }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "8"
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "16.04"
+	"14.04",
+        "16.04",
+        "18.04"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.10.0 < 7.0.0"
+      "version_requirement": ">= 6.0.0 < 7.0.0"
     }
   ],
   "pdk-version": "1.10.0",
