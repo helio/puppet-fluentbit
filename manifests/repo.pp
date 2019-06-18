@@ -31,16 +31,17 @@ class fluentbit::repo (
     # add source
     apt::source { 'fluentbit':
       notify_update => true,
-      location      => 'http://packages.fluentbit.io/ubuntu',
+      location      => "https://packages.fluentbit.io/ubuntu/${release}",
       release       => $release,
       repos         => 'main',
     }
   } elsif $facts["os"]["name"] == 'Debian'{
+    $release = $facts['os']['distro']['codename']
     # add source
     apt::source { 'fluentbit':
       notify_update => true,
-      location      => 'http://packages.fluentbit.io/debian',
-      release       => $facts['os']['distro']['codename'],
+      location      => "https://packages.fluentbit.io/debian/${release}",
+      release       => $release,
       repos         => 'main',
     }
   }
