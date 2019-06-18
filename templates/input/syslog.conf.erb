@@ -1,36 +1,14 @@
 # Managed by puppet
-# td agent bit config file include all other config files
-[SERVICE]
-    # configure service
-    <% if @flush %>
-    Flush           <%= @flush -%>
+# config for syslog input plugin
+[INPUT]
+    # configure plugins
+    Name     syslog
+    <% if @parser %>
+    Parser   <%= @parser -%>
     <% end -%>
-    <% if @daemon == 'on' %>
-    Daemon          <%= @daemon -%>
+    <% if @path %>
+    Path     <%= @path -%>
     <% end -%>
-    <% if @log_file %>
-    Log_File        <%= @log_file -%>
+    <% if @mode %>
+    Mode     <%= @mode -%>
     <% end -%>
-    <% if @log_level %>
-    Log_Level       <%= @log_level -%>
-    <% end -%>
-    <% if @parsers_file %>
-    Parsers_File    <%= @parsers_file -%>
-    <% end -%>
-    <% if @plugins_file %>
-    Plugin_File     <%= @plugins_file -%>
-    <% end -%>
-    <% if @streams_file %>
-    Streams_file    <%= @streams_file -%>
-    <% end -%>
-    <% if @http_server == 'on' %>
-    HTTP_Server     <%= @http_server -%>
-    HTTP_Listen     <%= @http_listen -%>
-    HTTP_Port       <%= @http_port -%>
-    <% end -%>
-    <% if @coro_stack_size %>
-    Coro_Stack_Size <%= @coro_stack_size -%>
-    <% end -%>
-
-@INCLUDE inputs_*.conf
-@INCLUDE outputs_*.conf

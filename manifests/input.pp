@@ -7,7 +7,7 @@
 class fluentbit::input (
     Optional[Hash] $plugins = { 'syslog' => {},}
   ){
-    $plugins.each | String $plugin {
+    $plugins.each | String $plugin, Hash $attributes | {
       Resource[fluentbit::inputs] {
         $plugin: * => $attributes;
         default:   * => $defaults;

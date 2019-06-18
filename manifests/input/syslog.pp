@@ -31,10 +31,10 @@ class fluentbit::input::syslog(
     notify  => Service['td-agent-bit'], # TODO: get service name from params
   }
   # create rsyslog config
-  file { 'rsyslog_config':
+  file { $rsyslog_config:
     ensure  => file,
     mode    => '0644',
-    notify  => Service['rsyslog']
+    notify  => Service['rsyslog'],
     content => '$ModLoad omuxsock
 $OMUxSockSocket /tmp/fluent-bit.sock
 *.* :omuxsock:',
