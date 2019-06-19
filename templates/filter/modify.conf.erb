@@ -1,0 +1,48 @@
+# Managed by puppet
+# Filter to modify output
+[FILTER]
+    # configure plugins
+    Name  modify<%- if @match %>
+    Match <%= @match -%>
+    <% end -%>
+    <% if @set %>
+      <% @set.each do |key, value| -%>
+    Set <%= key %> <%= value %>
+      <% end -%>
+    <% end -%>
+    <% if @add %>
+      <% @add.each do |key, value| -%>
+    Add <%= key %> <%= value %>
+      <% end -%>
+    <% end -%>
+    <% if @remove %>
+      <% @remove.each do |key, value| -%>
+    Remove <%= key %> <%= value %>
+      <% end -%>
+    <% end -%>
+    <%- if @remove_wildcard %>
+    Remove_wildcard <%= @remove_wildcard -%>
+    <% end -%>
+    <%- if @remove_regex %>
+    Remove_regex <%= @remove_regex -%>
+    <% end -%>
+    <% if @rename %>
+      <% @rename.each do |key, value| -%>
+    Rename <%= key %> <%= value %>
+      <% end -%>
+    <% end -%>
+    <% if @hard_rename %>
+      <% @hard_rename.each do |key, value| -%>
+    Hard_rename <%= key %> <%= value %>
+      <% end -%>
+    <% end -%>
+    <% if @copy %>
+      <% @copy.each do |key, value| -%>
+    Copy <%= key %> <%= value %>
+      <% end -%>
+    <% end -%>
+    <% if @hard_copy %>
+      <% @hard_copy.each do |key, value| -%>
+    Hard_copy <%= key %> <%= value %>
+      <% end -%>
+    <% end -%>
