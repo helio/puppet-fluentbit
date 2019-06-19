@@ -18,7 +18,7 @@
 define fluentbit::input::forward (
     String $configfile                  = '/etc/td-agent-bit/input_forward.conf',
     String $listen                      = '0.0.0.0',
-    String $port                        = '24224',
+    Integer $port                       = '24224',
     Optional[String] $buffer_max_size   = undef,
     Optional[String] $buffer_chunk_size = undef,
 ) {
