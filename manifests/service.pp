@@ -5,7 +5,7 @@ class fluentbit::service {
   assert_private()
 
   # manage service
-  service { '$::fluentbit::service_name':
+  service { $::fluentbit::service_name:
     ensure     => running,
     enable     => true,
     hasstatus  => true,

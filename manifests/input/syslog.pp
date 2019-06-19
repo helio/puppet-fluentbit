@@ -32,7 +32,7 @@ define fluentbit::input::syslog(
     ensure  => file,
     mode    => '0644',
     content => template('fluentbit/input/syslog.conf.erb'),
-    notify  => Service['$::fluentbit::service_name'], # TODO: get service name from params
+    notify  => Class['fluentbit::service'],
   }
   # create rsyslog config and reload service
   file { $rsyslog_config:
