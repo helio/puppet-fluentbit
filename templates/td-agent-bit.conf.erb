@@ -1,8 +1,7 @@
 # Managed by puppet
 # td agent bit config file include all other config files
 [SERVICE]
-    # configure service
-    <% if @flush %>
+    # configure service<% if @flush %>
     Flush           <%= @flush -%>
     <% end -%>
     <% if @daemon == 'on' %>
@@ -30,7 +29,7 @@
     <% end -%>
     <% if @coro_stack_size %>
     Coro_Stack_Size <%= @coro_stack_size -%>
-    <% end -%>
+    <% end %>
 
 @INCLUDE inputs_*.conf
 @INCLUDE outputs_*.conf
