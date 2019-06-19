@@ -21,6 +21,7 @@ class fluentbit(
     -> class{'fluentbit::config': }
     -> class{'fluentbit::service': }
     -> class{'fluentbit::input': }
+    -> class{'fluentbit::output': }
 
   contain fluentbit::install
   contain fluentbit::service
