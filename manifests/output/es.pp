@@ -2,6 +2,13 @@
 #
 # A description of what this class does
 #
+# @param configfile
+#  Path to the output configfile. Naming should be output_*.conf to make sure
+#  it's getting included by the main config.
+# @param match
+#  Tag to route the output.
+# @param tls
+#  Turn TLS encrypted communication with Elasticsearch on / off.
 # @param host
 #  IP address or hostname of the target Elasticsearch instance
 # @param port

@@ -3,6 +3,9 @@
 # Forward is the protocol used by Fluent Bit and Fluentd to route messages between peers.
 # This plugin implements the input service to listen for Forward messages.
 #
+# @param configfile
+#  Path to the input configfile. Naming should be input_*.conf to make sure
+#  it's getting included by the main config.
 # @param listen
 #  Listener network interface
 # @param port

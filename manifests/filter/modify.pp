@@ -1,5 +1,8 @@
 # @summary Filter to modify records using rules and conditions
 #
+# @param configfile
+#  Path to the filter configfile. Naming should be filter_*.conf to make sure
+#  it's getting included by the main config.
 # @param set
 #  Add a key/value pair with key KEY and value VALUE.
 #  If KEY already exists, this field is overwritten
