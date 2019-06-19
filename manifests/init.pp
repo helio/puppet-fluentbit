@@ -52,13 +52,13 @@ class fluentbit(
   }
   # output plugins
   $output_plugins.each | String $plugin, Hash $attributes | {
-    Resource["fluentbit::input::${plugin}"] {
+    Resource["fluentbit::output::${plugin}"] {
       $plugin: * => $attributes;
     }
   }
   # filter plugins
-  $output_plugins.each | String $plugin, Hash $attributes | {
-    Resource["fluentbit::input::${plugin}"] {
+  $filters.each | String $plugin, Hash $attributes | {
+    Resource["fluentbit::filter::${plugin}"] {
       $plugin: * => $attributes;
     }
   }

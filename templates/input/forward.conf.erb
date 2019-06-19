@@ -1,12 +1,15 @@
 # Managed by puppet
 # config to forward messages in fluentbit
 [INPUT]
-    Name     forward<%- if @parser %>
-    Parser   <%= @parser -%>
+    Name     forward<%- if @listen %>
+    Listen   <%= @listen -%>
     <% end -%>
-    <% if @path %>
-    Path     <%= @path -%>
+    <% if @port %>
+    Port      <%= @port -%>
     <% end -%>
-    <% if @mode %>
-    Mode     <%= @mode -%>
+    <% if @buffer_max_size %>
+    Buffer_Max_Size   <%= @buffer_max_size -%>
+    <% end -%>
+    <% if @buffer_chunk_size %>
+    Buffer_Chunk_Size <%= @buffer_chunk_size -%>
     <% end -%>
