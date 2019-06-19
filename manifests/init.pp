@@ -17,16 +17,16 @@ class fluentbit(
   Boolean $create_defaults     = false,
   String $service_name         = 'td-agent-bit',
   ### START Hiera Lookups ###
-  Hash $input_plugins          = ? $create_defaults ? {
-    true => 'syslog' => { mode => unix_udp, },
+  Hash $input_plugins          = $create_defaults ? {
+    true => { 'syslog' => { mode => unix_udp, }},
     false => {}
     },
-  Hash $output_plugins         = ? $create_defaults ? {
-    true => 'es' => { },
+  Hash $output_plugins         = $create_defaults ? {
+    true => { 'es' => {}},
     false => {}
     },
-  Hash $filters                = ? $create_defaults ? {
-    true => 'modify',
+  Hash $filters                = $create_defaults ? {
+    true => { 'modify' => {}},
     false => {}
     },
   ) {
@@ -38,8 +38,8 @@ class fluentbit(
   }
   # install package and configure td-agent-bit with service
   class{'fluentbit::install': }
-    -> class{'fluentbit::service': }
     -> class{'fluentbit::config': }
+    -> class{'fluentbit::service': }
   contain fluentbit::install
   contain fluentbit::service
 
