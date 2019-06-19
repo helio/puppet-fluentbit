@@ -1,0 +1,12 @@
+# Managed by puppet
+# config to forward messages in fluentbit
+[INPUT]
+    Name     forward<%- if @parser %>
+    Parser   <%= @parser -%>
+    <% end -%>
+    <% if @path %>
+    Path     <%= @path -%>
+    <% end -%>
+    <% if @mode %>
+    Mode     <%= @mode -%>
+    <% end -%>

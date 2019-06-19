@@ -1,8 +1,10 @@
-# @summary A short summary of the purpose of this class
+# @summary Ingest logs from (r)syslog
 #
-# A description of what this class does
+# Setups config file for fluentbit and configures listen
+# on rsyslog. Reloads services if something changes.
 #
-# @params TODO
+# @param mode
+#  
 #
 # @example
 # == Define: define_name
