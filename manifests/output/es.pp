@@ -1,6 +1,4 @@
-# @summary A short summary of the purpose of this class
-#
-# A description of what this class does
+# @summary Plugin to output logs to a configured elasticsearch instance
 #
 # @param configfile
 #  Path to the output configfile. Naming should be output_*.conf to make sure
