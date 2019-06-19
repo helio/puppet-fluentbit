@@ -3,9 +3,9 @@
 # A description of what this class does
 #
 # @example
-#   include fluentbit::ouptput
-class fluentbit::ouptput {
-  Optional[Hash] $output_plugins = { 'es' => { }},
+#   include fluentbit::output
+class fluentbit::output (
+  Hash $output_plugins = { 'es' => { }},
 ){
   $output_plugins.each | String $plugin, Hash $attributes | {
     Resource["fluentbit::output::${plugin}"] {

@@ -1,9 +1,14 @@
-# @summary A short summary of the purpose of this class
+# @summary Manages the td-agent-bit service
 #
-# A description of what this class does
-#
-# @example
-#   include fluentbit::service
+# @private
 class fluentbit::service {
   assert_private()
+
+  # manage service
+  service { '$::fluentbit::service_name':
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+  }
 }
