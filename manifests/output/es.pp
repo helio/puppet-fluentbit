@@ -77,6 +77,6 @@ define fluentbit::output::es(
     ensure  => file,
     mode    => '0644',
     content => template('fluentbit/output/es.conf.erb'),
-    notify  => Service['$::fluentbit::service_name'], # TODO: get service name from params.pp
+    notify  => Class['fluentbit::service'],
   }
 }

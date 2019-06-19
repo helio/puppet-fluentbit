@@ -54,6 +54,6 @@ class fluentbit::config(
     ensure  => file,
     mode    => '0644',
     content => template('fluentbit/td-agent-bit.conf.erb'),
-    notify  => Service['$::fluentbit::service_name'], # TODO: get service name from params
+    notify  => Class['fluentbit::service'],
   }
 }

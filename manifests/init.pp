@@ -18,8 +18,8 @@ class fluentbit(
   }
   # install package and configure td-agent-bit with service
   class{'fluentbit::install': }
-    -> class{'fluentbit::config': }
     -> class{'fluentbit::service': }
+    -> class{'fluentbit::config': }
     -> class{'fluentbit::input': }
     -> class{'fluentbit::output': }
 
