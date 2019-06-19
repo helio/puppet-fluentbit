@@ -30,6 +30,8 @@
 #  Set TCP Port for the HTTP Server
 # @param coro_stack_size
 #  Set the coroutines stack size in bytes. The value must be greater than the page size of the running system.
+# @param configfile
+#  Path to the td-agent-bit config file. 
 #
 # @private
 #   include fluentbit::config

@@ -4,10 +4,21 @@
 # on rsyslog. Reloads services if something changes.
 #
 # @param mode
-#  
-#
-# @example
-# == Define: define_name
+#  Defines transport protocol mode: unix_udp (UDP over Unix socket), unix_tcp (TCP over Unix socket), tcp or udp  
+# @param listen
+#  If Mode is set to tcp, specify the network interface to bind.
+# @param port
+#  If Mode is set to tcp, specify the TCP port to listen for incoming connections.
+# @param path
+#  If Mode is set to unix_tcp or unix_udp, set the absolute path to the Unix socket file.
+# @param parser
+#  Specify an alternative parser for the message. By default, the plugin uses the parser syslog-rfc3164. 
+#  If your syslog messages have fractional seconds set this Parser value to syslog-rfc5424 instead.
+# @param rsyslog_config
+#  Specify the path to the rsyslog config file for fluentbit to enable listening.
+# @param configfile
+#  Path to the input configfile. Naming should be input_*.conf to make sure
+#  it's getting included by the main config.
 #
 define fluentbit::input::syslog(
   String $mode = 'unix_udp',
