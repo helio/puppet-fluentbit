@@ -24,17 +24,17 @@
 # @example
 #   fluentbit::filter::modify { 'namevar': }
 define fluentbit::filter::modify (
-  String $configfile                = '/etc/td-agent-bit/filter_modify.conf',
-  String $match                     = '*',
-  Optional[Array] $set              = undef,
-  Optional[Array] $add              = undef,
-  Optional[Array] $remove           = undef,
-  Optional[String] $remove_wildcard = undef,
-  Optional[String] $remove_regex    = undef,
-  Optional[Array] $rename           = undef,
-  Optional[Array] $hard_rename      = undef,
-  Optional[Array] $copy             = undef,
-  Optional[Array] $hard_copy        = undef,
+  String $configfile         = '/etc/td-agent-bit/filter_modify.conf',
+  String $match              = '*',
+  Optional $set              = undef,
+  Optional $add              = undef,
+  Optional $remove           = undef,
+  Optional $remove_wildcard  = undef,
+  Optional $remove_regex     = undef,
+  Optional $rename           = undef,
+  Optional $hard_rename      = undef,
+  Optional $copy             = undef,
+  Optional $hard_copy        = undef,
 ) {
   # create filter_modify.conf
   # TODO: concat for multiple entries
