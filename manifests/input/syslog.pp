@@ -8,7 +8,7 @@
 # == Define: define_name
 #
 define fluentbit::input::syslog(
-  Optional[String] $mode = 'unix_udp',
+  String $mode = 'unix_udp',
   Optional[String] $listen = $mode ? {
     tcp => '0.0.0.0',
     default => undef
@@ -22,9 +22,9 @@ define fluentbit::input::syslog(
     unix_udp => '/tmp/fluent-bit.sock',
     default  => undef,
   },
-  Optional[String] $parser = 'syslog-rfc3164',
-  Optional[String] $configfile = '/etc/td-agent-bit/input_syslog.conf',
-  Optional[String] $rsyslog_config = '/etc/rsyslog.d/60-fluent-bit.conf',
+  String $parser = 'syslog-rfc3164',
+  String $configfile = '/etc/td-agent-bit/input_syslog.conf',
+  String $rsyslog_config = '/etc/rsyslog.d/60-fluent-bit.conf',
 ) {
   # create input_syslog.conf
   # TODO: concat for multiple entries

@@ -34,18 +34,18 @@
 # @private
 #   include fluentbit::config
 class fluentbit::config(
-  Optional[String]  $configfile = '/etc/td-agent-bit/td-agent-bit.conf',
-  Optional[Integer] $flush = 5,
-  Optional[Enum['on', 'off']] $daemon = off,
-  Optional[String] $log_file = undef,
-  Optional[String] $log_level = info, # TODO: Enum
+  String $configfile             = '/etc/td-agent-bit/td-agent-bit.conf',
+  Integer $flush                 = 5,
+  Enum['on', 'off'] $daemon      = off,
+  Optional[String] $log_file     = undef,
+  String $log_level              = info, # TODO: Enum
   Optional[String] $parsers_file = undef, #TODO: map e.g. nginx with nginx.conf
   Optional[String] $plugins_file = undef,
   Optional[String] $streams_file = undef,
-  Optional[Enum['on', 'off']] $http_server = off,
-  Optional[String] $http_listen = '0.0.0.0',
-  Optional[String] $http_port = '2020',
-  Optional[String] $coro_stack_size = '24576',
+  Enum['on', 'off'] $http_server = off,
+  String $http_listen            = '0.0.0.0',
+  String $http_port              = '2020',
+  String $coro_stack_size        = '24576',
 ) {
   assert_private()
 

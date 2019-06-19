@@ -8,6 +8,7 @@
 # @param ensure Add or remove the software
 class fluentbit(
   Boolean $manage_package_repo = true,
+  String $service_name         = 'td-agent-bit',
   ) {
   # configures repo if enabled
   if $manage_package_repo {

@@ -5,7 +5,7 @@
 # @example
 #   include fluentbit::output
 class fluentbit::output (
-  Optional[Hash] $output_plugins = { 'es' => { }},
+  Hash $output_plugins = { 'es' => { }},
 ){
   $output_plugins.each | String $plugin, Hash $attributes | {
     Resource["fluentbit::output::${plugin}"] {
