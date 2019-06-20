@@ -83,5 +83,6 @@ define fluentbit::output::es(
     mode    => '0644',
     content => template('fluentbit/output/es.conf.erb'),
     notify  => Class['fluentbit::service'],
+    require => Class['fluentbit::install'],
   }
 }
