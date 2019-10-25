@@ -19,17 +19,15 @@
 #  The value must be according to the Unit Size specification.
 #
 define fluentbit::input::forward (
-    String $configfile                  = '/etc/td-agent-bit/input_forward.conf',
-    String $listen                      = '0.0.0.0',
-    Integer $port                       = '24224',
-    Optional[String] $buffer_max_size   = undef,
-    Optional[String] $buffer_chunk_size = undef,
+    String $configfile                    = "/etc/td-agent-bit/input_forward_${name}.conf",
+    Stdlib::IP::Address::Nosubnet $listen = '0.0.0.0',
+    Stdlib::Port $port                    = 24224,
+    Optional[String] $buffer_max_size     = undef,
+    Optional[String] $buffer_chunk_size   = undef,
 ) {
-  # create input_syslog.conf
-  # TODO: concat for multiple entries
   file { $configfile:
     ensure  => file,
-    mode    => '0644',
+    mode    => $fluentbit::config_file_mode,
     content => template('fluentbit/input/forward.conf.erb'),
     notify  => Class['fluentbit::service'],
   }

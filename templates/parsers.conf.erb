@@ -1,0 +1,35 @@
+# Managed by puppet
+<% @parsers.each do |parser| -%>
+[PARSER]
+    Name          <%= parser['name'] %>
+<% if parser['format'] -%>
+    Format        <%= parser['format'] %>
+<% end -%>
+<% if parser['regex'] -%>
+    Regex         <%= parser['regex'] %>
+<% end -%>
+<% if parser['time_key'] -%>
+    Time_key      <%= parser['time_key'] %>
+<% end -%>
+<% if parser['time_format'] -%>
+    Time_format   <%= parser['time_format'] %>
+<% end -%>
+<% if parser['time_offset'] -%>
+    Time_offset   <%= parser['time_offset'] %>
+<% end -%>
+<% if parser['time_keep'] == true -%>
+    Time_keep     On
+<% elsif parser['time_keep'] == false -%>
+    Time_keep     Off
+<% end -%>
+<% if parser['types'] -%>
+    Types         <%= parser['types'].map { |type| [type['field'], type['type']].join(':') }.join(' ') %>
+<% end -%>
+<% if parser['decode_field'] -%>
+<% parser['decode_field'].each do |decode| -%>
+    Decode_field  <%= decode['decoder'] %> <%= decode['field'] %>
+<% end -%>
+<% end -%>
+
+<% end -%>
+# <%= @parsers.length %> parsers
