@@ -30,7 +30,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/output_http_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/output_http_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -63,7 +63,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/output_http_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/output_http_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -84,7 +84,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/output_http_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/output_http_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -105,7 +105,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/output_http_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/output_http_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -126,7 +126,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/output_http_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/output_http_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -157,7 +157,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/output_http_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/output_http_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -190,7 +190,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/output_http_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/output_http_rspec.conf')
             .with_content(rendered)
         end
       end

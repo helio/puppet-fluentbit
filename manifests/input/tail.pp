@@ -83,7 +83,7 @@
 #
 define fluentbit::input::tail (
   Stdlib::Absolutepath $path,
-  Stdlib::Absolutepath $configfile                          = "/etc/td-agent-bit/input_tail_${name}.conf",
+  Stdlib::Absolutepath $configfile                          = "/etc/td-agent-bit/plugins.d/input_tail_${name}.conf",
   Optional[String[1]] $routing_tag                          = undef,
   Optional[Enum['memory', 'filesystem']] $storage_type      = undef,
 

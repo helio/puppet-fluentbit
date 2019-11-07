@@ -26,6 +26,18 @@ class fluentbit::config {
     }
   }
 
+  # the @INCLUDE command does not support absolute paths
+  # so we create the directory next to the main configuration file
+  # and reference it relatively. since the include instruction is
+  # hardcoded in the configuration file, we need to create the
+  # directory otherwise the daemon fails with '[mk_rconf_read_glob] glob: no match'
+  file { "${config_dir}/plugins.d":
+    ensure  => directory,
+    purge   => $fluentbit::manage_config_dir,
+    recurse => $fluentbit::manage_config_dir,
+    mode    => '0755',
+  }
+
   $flush = $fluentbit::flush
   $daemon = bool2str($fluentbit::daemon, 'On', 'Off')
   $log_file = $fluentbit::log_file

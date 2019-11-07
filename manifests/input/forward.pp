@@ -19,7 +19,7 @@
 #  The value must be according to the Unit Size specification.
 #
 define fluentbit::input::forward (
-    String $configfile                    = "/etc/td-agent-bit/input_forward_${name}.conf",
+    Stdlib::Absolutepath $configfile      = "/etc/td-agent-bit/plugins.d/input_forward_${name}.conf",
     Stdlib::IP::Address::Nosubnet $listen = '0.0.0.0',
     Stdlib::Port $port                    = 24224,
     Optional[String] $buffer_max_size     = undef,

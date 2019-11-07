@@ -36,7 +36,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/input_tail_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/input_tail_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -63,7 +63,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/input_tail_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/input_tail_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -88,7 +88,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/input_tail_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/input_tail_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -116,7 +116,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/input_tail_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/input_tail_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -150,7 +150,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/input_tail_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/input_tail_rspec.conf')
             .with_content(rendered)
         end
       end
@@ -181,7 +181,7 @@ EOF
         end
 
         it do
-          is_expected.to contain_file('/etc/td-agent-bit/input_tail_rspec.conf')
+          is_expected.to contain_file('/etc/td-agent-bit/plugins.d/input_tail_rspec.conf')
             .with_content(rendered)
         end
       end

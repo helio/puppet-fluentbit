@@ -70,7 +70,7 @@
 # @example
 #   fluentbit::output::http { 'logstash': }
 define fluentbit::output::http (
-  Stdlib::Absolutepath $configfile            = "/etc/td-agent-bit/output_http_${name}.conf",
+  Stdlib::Absolutepath $configfile            = "/etc/td-agent-bit/plugins.d/output_http_${name}.conf",
   Fluentbit::TLS $tls                         = {},
   Hash[String[1], String[1]] $headers         = {},
   Variant[Undef, Boolean, Integer[1]]

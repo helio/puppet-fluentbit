@@ -28,6 +28,4 @@
     storage.backlog.mem_limit <%= @storage_backlog_mem_limit %>
 <% end -%>
 
-@INCLUDE input_*.conf
-@INCLUDE output_*.conf
-@INCLUDE filter_*.conf
+@INCLUDE plugins.d/*.conf
