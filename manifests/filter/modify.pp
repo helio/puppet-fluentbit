@@ -24,6 +24,26 @@
 # @param hard_copy
 #  Copy a key/value pair with key KEY to COPIED_KEY if KEY exists.
 #  If COPIED_KEY already exists, this field is overwritten
+# @param key_exists
+#   Is true if KEY exists
+# @param key_does_not_exist
+#   Is true if KEY does not exist
+# @param a_key_matches
+#   Is true if a key matches regex KEY
+# @param no_key_matches
+#   Is true if no key matches regex KEY
+# @param key_value_equals
+#   Is true if KEY exists and its value is VALUE
+# @param key_value_does_not_equal
+#   Is true if KEY exists and its value is not VALUE
+# @param key_value_matches
+#   Is true if key KEY exists and its value matches VALUE
+# @param key_value_does_not_match
+#   Is true if key KEY exists and its value does not match VALUE
+# @param matching_keys_have_matching_values
+#   Is true if all keys matching KEY have values that match VALUE
+# @param matching_keys_do_not_have_matching_values
+#   Is true if all keys matching KEY have values that do not match VALUE
 # @example
 #   fluentbit::filter::modify { 'namevar': }
 define fluentbit::filter::modify (
@@ -38,6 +58,16 @@ define fluentbit::filter::modify (
   Optional $hard_rename      = undef,
   Optional $copy             = undef,
   Optional $hard_copy        = undef,
+  Array[String[1]] $key_exists                                          = [],
+  Array[String[1]] $key_does_not_exist                                  = [],
+  Array[String[1]] $a_key_matches                                       = [],
+  Array[String[1]] $no_key_matches                                      = [],
+  Hash[String[1], String[1]] $key_value_equals                          = {},
+  Hash[String[1], String[1]] $key_value_does_not_equal                  = {},
+  Hash[String[1], String[1]] $key_value_matches                         = {},
+  Hash[String[1], String[1]] $key_value_does_not_match                  = {},
+  Hash[String[1], String[1]] $matching_keys_have_matching_values        = {},
+  Hash[String[1], String[1]] $matching_keys_do_not_have_matching_values = {},
 ) {
   # create filter_modify.conf
   # TODO: concat for multiple entries
