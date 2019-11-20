@@ -20,7 +20,7 @@
 #   GPG key location
 #
 # @param package_ensure
-#   Whether to install the NTP package, and what version to install.
+#   Whether to install the Fluentbit package, and what version to install.
 #   Values: 'present', 'latest', or a specific version number.
 #   Default value: 'present'.
 #
