@@ -9,6 +9,7 @@
 * [`fluentbit::config`](#fluentbitconfig): configures the main fluentbit main config
 * [`fluentbit::install`](#fluentbitinstall): Installs fluentbit package
 * [`fluentbit::repo`](#fluentbitrepo): configures the fluentbit repo
+* [`fluentbit::repo::debian`](#fluentbitrepodebian): A short summary of the purpose of this class
 * [`fluentbit::service`](#fluentbitservice): Manages the td-agent-bit service
 
 **Defined types**
@@ -16,7 +17,9 @@
 * [`fluentbit::filter::modify`](#fluentbitfiltermodify): Filter to modify records using rules and conditions
 * [`fluentbit::input::forward`](#fluentbitinputforward): Inputs / listen and forward messages
 * [`fluentbit::input::syslog`](#fluentbitinputsyslog): Ingest logs from (r)syslog
-* [`fluentbit::output::es`](#fluentbitoutputes): A short summary of the purpose of this class
+* [`fluentbit::input::tail`](#fluentbitinputtail): Input plugin to monitor one or several text files.
+* [`fluentbit::output::es`](#fluentbitoutputes): Plugin to output logs to a configured elasticsearch instance
+* [`fluentbit::output::http`](#fluentbitoutputhttp): Manage the configuration of a HTTP output plugin.
 
 ## Classes
 
@@ -45,59 +48,205 @@ Data type: `Boolean`
 
 Installs the package repositories
 
-Default value: `true`
-
-##### `create_defaults`
-
-Data type: `Boolean`
-
-create some fluetbit example files (syslog, es, filers)
-
-Default value: `false`
-
 ##### `service_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 the td-agent-bit service name
 
-Default value: 'td-agent-bit'
-
 ##### `input_plugins`
 
-Data type: `Hash`
+Data type: `Array[Fluentbit::Plugin]`
 
 Hash of the INPUT plugins to be configured
 
-Default value: $create_defaults
-
 ##### `output_plugins`
 
-Data type: `Hash`
+Data type: `Array[Fluentbit::Plugin]`
 
 Hash of the OUTPUT plugins to be configured
 
-Default value: $create_defaults
+##### `filter_plugins`
 
-##### `filters`
-
-Data type: `Hash`
+Data type: `Array[Fluentbit::Plugin]`
 
 Hash of the filter to be configured
 
-Default value: $create_defaults
+##### `manage_package_repo`
 
-### fluentbit::config
+Installs the package repositories
 
-Creates a puppet resource for every input, ouptut config
-Doesn't support filters (yet)
-Includes all [input] and [output] configs. (@include)
-Sets global variables (@set)
-Configures global [service] section
+##### `repo_key_fingerprint`
 
-#### Parameters
+Data type: `String[1]`
 
-The following parameters are available in the `fluentbit::config` class.
+GPG key identifier of the repository
+
+##### `repo_key_location`
+
+Data type: `Stdlib::HTTPUrl`
+
+GPG key location
+
+##### `package_ensure`
+
+Data type: `String[1]`
+
+Whether to install the Fluentbit package, and what version to install.
+Values: 'present', 'latest', or a specific version number.
+Default value: 'present'.
+
+##### `package_name`
+
+Data type: `String[1]`
+
+Specifies the Fluentbit package to manage.
+Default value: 'td-agent-bit'
+
+##### `manage_service`
+
+Data type: `Boolean`
+
+Whether to manage the service at all.
+Default value: true
+
+##### `service_enable`
+
+Data type: `Boolean`
+
+Whether to enable the fluentbit service at boot.
+Default value: true.
+
+##### `service_ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Whether the fluentbit service should be running.
+Default value: 'running'.
+
+##### `service_manage`
+
+Whether to manage the fluentbit service.
+Default value: true.
+
+##### `service_hasstatus`
+
+Whether the service has a functional status command.
+Default value: true.
+
+##### `service_hasrestart`
+
+Whether the service has a restart command.
+Default value: true.
+
+##### `manage_config_dir`
+
+Data type: `Boolean`
+
+Whether to manage the configuration directory.
+When enabled, will remove all unmanaged files from the directory the
+configuration resides in.
+Default value: true
+
+##### `config_file`
+
+Data type: `Stdlib::Absolutepath`
+
+Path of the daemon configuration.
+
+##### `config_file_mode`
+
+Data type: `Stdlib::Filemode`
+
+File mode to apply to the daemon configuration file
+
+##### `storage_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Set an optional location in the file system to store streams and chunks of data.
+If this parameter is not set, Input plugins can only use in-memory buffering.
+
+##### `storage_sync`
+
+Data type: `Optional[Enum['normal', 'full']]`
+
+Configure the synchronization mode used to store the data into the file system.
+It can take the values normal or full.
+Default value: 'normal'
+
+##### `storage_checksum`
+
+Data type: `Boolean`
+
+Enable the data integrity check when writing and reading data from the filesystem.
+The storage layer uses the CRC32 algorithm.
+Default value: false
+
+##### `storage_backlog_mem_limit`
+
+Data type: `Optional[String[1]]`
+
+If storage.path is set, Fluent Bit will look for data chunks that were
+not delivered and are still in the storage layer, these are called backlog data.
+This option configure a hint of maximum value of memory to use when processing these records.
+Default value: 5M
+
+##### `manage_plugins_file`
+
+Data type: `Boolean`
+
+Whether to manage the enabled external plugins
+
+##### `plugins_file`
+
+Data type: `Stdlib::Absolutepath`
+
+A plugins configuration file allows to define paths for external plugins.
+
+##### `plugins`
+
+Data type: `Array[Stdlib::Absolutepath]`
+
+List of external plugin objects to enable
+
+##### `manage_streams_file`
+
+Data type: `Boolean`
+
+Whether to manage the stream processing configuration
+
+##### `streams_file`
+
+Data type: `Stdlib::Absolutepath`
+
+Path for the Stream Processor configuration file.
+
+##### `streams`
+
+Data type: `Array[Fluentbit::Stream]`
+
+Stream processing tasks
+
+##### `manage_parsers_file`
+
+Data type: `Boolean`
+
+Whether to manage the parser definitions
+
+##### `parsers_file`
+
+Data type: `Stdlib::Absolutepath`
+
+Path for a parsers configuration file. Multiple Parsers_File entries can be used.
+
+##### `parsers`
+
+Data type: `Array[Fluentbit::Parser]`
+
+List of parser definitions.
+The default value consists of all the available definitions provided by the
+upstream project as of version 1.3
 
 ##### `flush`
 
@@ -105,97 +254,76 @@ Data type: `Integer`
 
 Set the flush time in seconds. Everytime it timeouts, the engine will flush the records to the output plugin.
 
-Default value: 5
-
 ##### `daemon`
 
-Data type: `Enum['on', 'off']`
+Data type: `Boolean`
 
 Boolean value to set if Fluent Bit should run as a Daemon (background) or not. Allowed values are: yes, no, on and off.
 
-Default value: off
-
 ##### `log_file`
 
-Data type: `Optional[String]`
+Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path for an optional log file.
 
-Default value: `undef`
-
 ##### `log_level`
 
-Data type: `String`
+Data type: `Enum['error', 'warning', 'info', 'debug', 'trace']`
 
-Set the logging verbosity level. Allowed values are: error, info, debug and trace. Values are accumulative,
+Set the logging verbosity level.
+Values are: error, info, debug and trace. Values are accumulative,
 e.g: if 'debug' is set, it will include error, info and debug.
 Note that trace mode is only available if Fluent Bit was built with the WITH_TRACE option enabled.
 
-Default value: info
-
-##### `parsers_file`
-
-Data type: `Optional[String]`
-
-Path for a parsers configuration file. Multiple Parsers_File entries can be used.
-
-Default value: `undef`
-
-##### `plugins_file`
-
-Data type: `Optional[String]`
-
-Path for a plugins configuration file. A plugins configuration file allows to define paths for external plugins, for an example see here.
-
-Default value: `undef`
-
-##### `streams_file`
-
-Data type: `Optional[String]`
-
-Path for the Stream Processor configuration file.
-
-Default value: `undef`
-
 ##### `http_server`
 
-Data type: `Enum['on', 'off']`
+Data type: `Boolean`
 
 Enable built-in HTTP Server
 
-Default value: off
-
 ##### `http_listen`
 
-Data type: `String`
+Data type: `Stdlib::IP::Address::Nosubnet`
 
 Set listening interface for HTTP Server when it's enabled
 
-Default value: '0.0.0.0'
-
 ##### `http_port`
 
-Data type: `String`
+Data type: `Stdlib::Port`
 
 Set TCP Port for the HTTP Server
 
-Default value: '2020'
-
 ##### `coro_stack_size`
 
-Data type: `String`
+Data type: `Integer`
 
-Set the coroutines stack size in bytes. The value must be greater than the page size of the running system.
+Set the coroutines stack size in bytes.
+The value must be greater than the page size of the running system.
 
-Default value: '24576'
+##### `variables`
 
-##### `configfile`
+Data type: `Hash`
 
-Data type: `String`
+macro definitions to use in the configuration file
+the will be registered using the *@SET* command.
 
-Path to the td-agent-bit config file.
+##### `service_has_status`
 
-Default value: '/etc/td-agent-bit/td-agent-bit.conf'
+Data type: `Boolean`
+
+
+
+##### `service_has_restart`
+
+Data type: `Boolean`
+
+
+
+### fluentbit::config
+
+Includes all [input] and [output] configs. (@include)
+Sets global variables (@set)
+Configures global [service] section
 
 ### fluentbit::install
 
@@ -205,17 +333,17 @@ Installs fluentbit package
 
 configures the fluentbit repo
 
-#### Parameters
+### fluentbit::repo::debian
 
-The following parameters are available in the `fluentbit::repo` class.
+A description of what this class does
 
-##### `ensure`
+#### Examples
 
-Data type: `Enum['present', 'absent']`
+##### 
 
-
-
-Default value: 'present'
+```puppet
+include fluentbit::repo::debian
+```
 
 ### fluentbit::service
 
@@ -347,11 +475,11 @@ Data type: `String`
 Path to the input configfile. Naming should be input_*.conf to make sure
 it's getting included by the main config.
 
-Default value: '/etc/td-agent-bit/input_forward.conf'
+Default value: "/etc/td-agent-bit/input_forward_${name}.conf"
 
 ##### `listen`
 
-Data type: `String`
+Data type: `Stdlib::IP::Address::Nosubnet`
 
 Listener network interface
 
@@ -359,11 +487,11 @@ Default value: '0.0.0.0'
 
 ##### `port`
 
-Data type: `Integer`
+Data type: `Stdlib::Port`
 
 TCP port to listen for incoming connections.
 
-Default value: '24224'
+Default value: 24224
 
 ##### `buffer_max_size`
 
@@ -451,9 +579,204 @@ it's getting included by the main config.
 
 Default value: '/etc/td-agent-bit/input_syslog.conf'
 
+### fluentbit::input::tail
+
+The tail input plugin allows to monitor one or several text files.
+It has a similar behavior like `tail -f` shell command.
+
+#### Parameters
+
+The following parameters are available in the `fluentbit::input::tail` defined type.
+
+##### `configfile`
+
+Data type: `Stdlib::Absolutepath`
+
+Path to the input configfile. Naming should be input_*.conf to make sure
+it's getting included by the main config.
+
+Default value: "/etc/td-agent-bit/input_tail_${name}.conf"
+
+##### `path`
+
+Data type: `Stdlib::Absolutepath`
+
+Pattern specifying a specific log files or multiple ones through the use of common wildcards.
+
+##### `routing_tag`
+
+Data type: `Optional[String[1]]`
+
+Set a tag (with regex-extract fields) that will be placed on lines read.
+
+Default value: `undef`
+
+##### `storage_type`
+
+Data type: `Optional[Enum['memory', 'filesystem']]`
+
+Specify the buffering mechanism to use.
+Values: memory, filesystem
+
+Default value: `undef`
+
+##### `buffer_chunk_size`
+
+Data type: `Optional[Fluentbit::Sizeunit]`
+
+Set the initial buffer size to read files data.
+
+Default value: `undef`
+
+##### `buffer_max_size`
+
+Data type: `Optional[Fluentbit::Sizeunit]`
+
+Set the limit of the buffer size per monitored file.
+
+Default value: `undef`
+
+##### `path_key`
+
+Data type: `Optional[String[1]]`
+
+Appends the name of the monitored file as part of the record. The value assigned becomes the key in the map.
+
+Default value: `undef`
+
+##### `exclude_path`
+
+Data type: `Array[String]`
+
+Shell patterns to exclude files matching a certain criteria.
+
+Default value: []
+
+##### `refresh_interval`
+
+Data type: `Optional[Integer[1]]`
+
+The interval of refreshing the list of watched files in seconds.
+
+Default value: `undef`
+
+##### `rotate_wait`
+
+Data type: `Optional[Integer[1]]`
+
+Specify the number of extra time in seconds to monitor a file once is
+rotated in case some pending data is flushed.
+
+Default value: `undef`
+
+##### `ignore_older`
+
+Data type: `Optional[Fluentbit::Timeunit]`
+
+Ignores files that have been last modified before this time.
+
+Default value: `undef`
+
+##### `skip_long_lines`
+
+Data type: `Boolean`
+
+When a monitored file reach it buffer capacity due to a very long line
+(Buffer_Max_Size), the default behavior is to stop monitoring that file.
+*Skip_Long_Lines* alters that behavior and instructs Fluent Bit to skip
+long lines and continue processing other lines that fits into the buffer size.
+
+Default value: `false`
+
+##### `db`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Specify the database file to keep track of monitored files and offsets.
+
+Default value: `undef`
+
+##### `db_sync`
+
+Data type: `Optional[Enum['Extra', 'Full', 'Normal', 'Off']]`
+
+Set a default synchronization (I/O) method.
+Values: Extra, Full, Normal, Off.
+
+Default value: `undef`
+
+##### `mem_buf_limit`
+
+Data type: `Optional[Fluentbit::Sizeunit]`
+
+Set a limit of memory that Tail plugin can use when appending data to the Engine.
+
+Default value: `undef`
+
+##### `key`
+
+Data type: `Optional[String[1]]`
+
+Name of the key to append any unstructured data to the output as.
+
+Default value: `undef`
+
+##### `tag_regex`
+
+Data type: `Optional[String[1]]`
+
+Set a regex to exctract fields from the file.
+
+Default value: `undef`
+
+##### `multiline`
+
+Data type: `Boolean`
+
+Try to discover multiline messages and use the proper parsers to compose the outgoing messages.
+
+Default value: `false`
+
+##### `multiline_flush`
+
+Data type: `Optional[Integer[1]]`
+
+Wait period time in seconds to process queued multiline messages.
+
+Default value: `undef`
+
+##### `parsers`
+
+Data type: `Array[String[1]]`
+
+Name of parsers to use for disecting the message.
+When *multiline* is enabled, the first array entry becomes the configuration
+value for **Parser_Firstline**, with the remaining entry being assigned to
+the **Parser_N** attributes.
+When *multiline* is disabled, only the first item is used for the *Parser*
+configuration value.
+
+Default value: []
+
+##### `docker_mode`
+
+Data type: `Boolean`
+
+Recombine split Docker log lines before passing them to any parser.
+
+Default value: `false`
+
+##### `docker_mode_flush`
+
+Data type: `Optional[Integer[1]]`
+
+Wait period time in seconds to flush queued unfinished split lines.
+
+Default value: `undef`
+
 ### fluentbit::output::es
 
-A description of what this class does
+Plugin to output logs to a configured elasticsearch instance
 
 #### Examples
 
@@ -474,7 +797,7 @@ Data type: `String`
 Path to the output configfile. Naming should be output_*.conf to make sure
 it's getting included by the main config.
 
-Default value: '/etc/td-agent-bit/output_es.conf'
+Default value: "/etc/td-agent-bit/output_es_${name}.conf"
 
 ##### `match`
 
@@ -494,7 +817,7 @@ Default value: 'off'
 
 ##### `host`
 
-Data type: `String`
+Data type: `Stdlib::Host`
 
 IP address or hostname of the target Elasticsearch instance
 
@@ -502,7 +825,7 @@ Default value: '127.0.0.1'
 
 ##### `port`
 
-Data type: `Integer`
+Data type: `Stdlib::Port`
 
 TCP port of the target Elasticsearch instance
 
@@ -613,4 +936,185 @@ Use current time for index generation instead of message record
 ##### `logstash_prefix_key`
 
 Prefix keys with this string
+
+### fluentbit::output::http
+
+The http output plugin allows to flush your records into a HTTP endpoint.
+This type manages the configuration for it.
+
+#### Examples
+
+##### 
+
+```puppet
+fluentbit::output::http { 'logstash': }
+```
+
+#### Parameters
+
+The following parameters are available in the `fluentbit::output::http` defined type.
+
+##### `configfile`
+
+Data type: `Stdlib::Absolutepath`
+
+Path to the output configfile. Naming should be output_*.conf to make sure
+it's getting included by the main config.
+
+Default value: "/etc/td-agent-bit/output_http_${name}.conf"
+
+##### `match`
+
+Data type: `Optional[String[1]]`
+
+Tag to route the output.
+
+Default value: `undef`
+
+##### `tls`
+
+Data type: `Fluentbit::TLS`
+
+TLS configuration. By default TLS is disabled.
+
+Default value: {}
+
+##### `headers`
+
+Data type: `Hash[String[1], String[1]]`
+
+Map of headers to add to requests.
+
+Default value: {}
+
+##### `retry_limit`
+
+Data type: `Variant[Undef, Boolean, Integer[1]]`
+
+Number of retries if upstream refuses the records.
+*false* will disable retries, *true* will cause it to retry once.
+All other values are passed on verbatim.
+
+Default value: `undef`
+
+##### `host`
+
+Data type: `Optional[Stdlib::Host]`
+
+IP address or hostname of the target HTTP Server.
+
+Default value: `undef`
+
+##### `port`
+
+Data type: `Optional[Stdlib::Port]`
+
+TCP port of the target HTTP Server.
+
+Default value: `undef`
+
+##### `http_user`
+
+Data type: `Optional[String[1]]`
+
+Basic Auth Username.
+
+Default value: `undef`
+
+##### `http_passwd`
+
+Data type: `Optional[String[1]]`
+
+Basic Auth Password.
+Requires HTTP_User to be set.
+
+Default value: `undef`
+
+##### `proxy`
+
+Data type: `Optional[Stdlib::HTTPUrl]`
+
+Specify an HTTP Proxy.
+
+Default value: `undef`
+
+##### `uri`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Specify an optional HTTP URI for the target web server.
+
+Default value: `undef`
+
+##### `format`
+
+Data type: `Optional[Enum['msgpack', 'json', 'json_stream', 'json_lines', 'gelf']]`
+
+Specify the data format to be used in the HTTP request body.
+
+Default value: `undef`
+
+##### `header_tag`
+
+Data type: `Optional[String[1]]`
+
+Specify an optional HTTP header field for the original message tag.
+
+Default value: `undef`
+
+##### `json_date_key`
+
+Data type: `Optional[String[1]]`
+
+Specify the name of the date field in output.
+
+Default value: `undef`
+
+##### `json_date_format`
+
+Data type: `Optional[Enum['double', 'iso8601']]`
+
+Specify the format of the date.
+
+Default value: `undef`
+
+##### `gelf_timestamp_key`
+
+Data type: `Optional[String[1]]`
+
+Specify the key to use for *timestamp* in **gelf** format.
+
+Default value: `undef`
+
+##### `gelf_host_key`
+
+Data type: `Optional[String[1]]`
+
+Specify the key to use for *host* in **gelf** format.
+
+Default value: `undef`
+
+##### `gelf_short_messge_key`
+
+Data type: `Optional[String[1]]`
+
+Specify the key to use for *short* in **gelf** format.
+
+Default value: `undef`
+
+##### `gelf_full_message_key`
+
+Data type: `Optional[String[1]]`
+
+Specify the key to use for *full* in **gelf** format.
+
+Default value: `undef`
+
+##### `gelf_level_key`
+
+Data type: `Optional[String[1]]`
+
+Specify the key to use for *level* in **gelf** format.
+
+Default value: `undef`
 

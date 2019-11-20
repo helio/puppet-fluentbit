@@ -1,0 +1,88 @@
+# Managed by puppet
+[OUTPUT]
+    Name                   http
+<% if @match -%>
+    Match                  <%= @match %>
+<% end -%>
+<% if @host -%>
+    Host                   <%= @host %>
+<% end -%>
+<% if @http_user -%>
+    HTTP_User              <%= @http_user %>
+<% end -%>
+<% if @http_passwd -%>
+    HTTP_Passwd            <%= @http_passwd %>
+<% end -%>
+<% if @port -%>
+    Port                   <%= @port %>
+<% end -%>
+<% if @proxy -%>
+    Proxy                  <%= @proxy %>
+<% end -%>
+<% if @uri -%>
+    URI                    <%= @uri %>
+<% end -%>
+<% if @format -%>
+    Format                 <%= @format %>
+<% end -%>
+<% if @header_tag -%>
+    header_tag             <%= @header_tag %>
+<% end -%>
+<% @headers.each do |key, value| -%>
+    Header                 <%= key %> <%= value %>
+<% end -%>
+<% if @json_date_key -%>
+    json_date_key          <%= @json_date_key %>
+<% end -%>
+<% if @json_date_format -%>
+    json_date_format       <%= @json_date_format %>
+<% end -%>
+<% if @gelf_timestamp_key -%>
+    gelf_timestamp_key     <%= @gelf_timestamp_key %>
+<% end -%>
+<% if @gelf_host_key -%>
+    gelf_host_key          <%= @gelf_host_key %>
+<% end -%>
+<% if @gelf_short_messge_key -%>
+    gelf_short_messge_key  <%= @gelf_short_messge_key %>
+<% end -%>
+<% if @gelf_full_message_key -%>
+    gelf_full_message_key  <%= @gelf_full_message_key %>
+<% end -%>
+<% if @gelf_level_key -%>
+    gelf_level_key         <%= @gelf_level_key %>
+<% end -%>
+<% if @tls_enabled -%>
+    tls                    <%= @tls_enabled %>
+<% end -%>
+<% if @tls_verify -%>
+    tls.verify             <%= @tls_verify %>
+<% end -%>
+<% if @tls_debug -%>
+    tls.debug              <%= @tls_debug %>
+<% end -%>
+<% if @tls_ca_file -%>
+    tls.ca_file            <%= @tls_ca_file %>
+<% end -%>
+<% if @tls_ca_path -%>
+    tls.ca_path            <%= @tls_ca_path %>
+<% end -%>
+<% if @tls_crt_file -%>
+    tls.crt_file           <%= @tls_crt_file %>
+<% end -%>
+<% if @tls_key_file -%>
+    tls.key_file           <%= @tls_key_file %>
+<% end -%>
+<% if @tls_key_passwd -%>
+    tls.key_passwd         <%= @tls_key_passwd %>
+<% end -%>
+<% if @tls_vhost -%>
+    tls.vhost              <%= @tls_vhost %>
+<% end -%>
+<% if @retry_limit == false -%>
+    Retry_Limit            False
+<% elsif @retry_limit == true -%>
+    Retry_Limit            1
+<% elsif @retry_limit.is_a?(Integer) -%>
+    Retry_Limit            <%= @retry_limit %>
+<% end -%>
