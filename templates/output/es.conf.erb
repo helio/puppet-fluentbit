@@ -1,28 +1,27 @@
 # Managed by puppet
-# config for elasticsearch output plugin
 [OUTPUT]
-    # configure plugins
-    Name  es<%- if @match %>
-    Match <%= @match -%>
-    <% end -%>
-    <% if @host %>
-    Host  <%= @host -%>
-    <% end -%>
-    <% if @port %>
-    Port  <%= @port -%>
-    <% end -%>
-    <% if @index %>
-    Index <%= @index -%>
-    <% end -%>
-    <% if @type %>
-    Type  <%= @type -%>
-    <% end -%>
-    <% if @tls %>
-    tls   <%= @tls -%>
-    <% end -%>
-    <% if @http_user %>
-    HTTP_User <%= @http_user -%>
-    <% end -%>
-    <% if @http_passwd %>
-    HTTP_Passwd <%= @http_passwd -%>
-    <% end -%>
+    Name  es
+<%- if @match -%>
+    Match <%= @match %>
+<% end -%>
+<% if @host -%>
+    Host  <%= @host %>
+<% end -%>
+<% if @port -%>
+    Port  <%= @port %>
+<% end -%>
+<% if @index -%>
+    Index <%= @index %>
+<% end -%>
+<% if @type -%>
+    Type  <%= @type %>
+<% end -%>
+<% if @tls -%>
+    tls   <%= @tls %>
+<% end -%>
+<% if @http_user -%>
+    HTTP_User <%= @http_user %>
+<% end -%>
+<% if @http_passwd -%>
+    HTTP_Passwd <%= @http_passwd %>
+<% end -%>

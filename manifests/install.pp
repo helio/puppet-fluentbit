@@ -1,12 +1,11 @@
 # @summary Installs fluentbit package
 #
 # @private
-class fluentbit::install (
-  ) {
+class fluentbit::install {
   assert_private()
 
-  # install package
-  Package{ 'td-agent-bit':
-    ensure => present,
+  package{ 'fluentbit':
+    ensure => $fluentbit::package_ensure,
+    name   => $fluentbit::package_name,
   }
 }

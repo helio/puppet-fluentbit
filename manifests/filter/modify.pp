@@ -46,5 +46,6 @@ define fluentbit::filter::modify (
     mode    => '0644',
     content => template('fluentbit/filter/modify.conf.erb'),
     notify  => Class['fluentbit::service'],
+    require => Class['fluentbit::install'],
   }
 }

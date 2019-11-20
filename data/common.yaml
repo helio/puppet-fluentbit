@@ -1,1 +1,236 @@
 ---
+
+fluentbit::manage_package_repo: true
+fluentbit::repo_key_fingerprint: F209D8762A60CD49E680633B4FF8368B6EA0722A
+fluentbit::repo_key_location: 'https://packages.fluentbit.io/fluentbit.key'
+fluentbit::package_ensure: present
+fluentbit::package_name: 'td-agent-bit'
+
+fluentbit::manage_service: true
+fluentbit::service_enable: true
+fluentbit::service_has_status: true
+fluentbit::service_has_restart: true
+fluentbit::service_ensure: 'running'
+fluentbit::service_name: 'td-agent-bit'
+fluentbit::manage_config_dir: true
+
+fluentbit::config_file: '/etc/td-agent-bit/td-agent-bit.conf'
+fluentbit::config_file_mode: '0644'
+fluentbit::flush: 5
+fluentbit::daemon: false
+fluentbit::log_file: ~
+fluentbit::log_level: info
+fluentbit::http_server: false
+fluentbit::http_listen: '0.0.0.0'
+fluentbit::http_port: 2020
+fluentbit::coro_stack_size: 24576
+
+fluentbit::variables: {}
+
+fluentbit::storage_path: ~
+fluentbit::storage_sync: ~
+fluentbit::storage_checksum: false
+fluentbit::storage_backlog_mem_limit: ~
+
+fluentbit::input_plugins: []
+fluentbit::output_plugins: []
+fluentbit::filter_plugins: []
+
+fluentbit::manage_plugins_file: true
+fluentbit::plugins_file: '/etc/td-agent-bit/plugins.conf'
+fluentbit::plugins: []
+
+fluentbit::manage_streams_file: true
+fluentbit::streams_file: '/etc/td-agent-bit/streams.conf'
+fluentbit::streams: []
+
+fluentbit::manage_parsers_file: true
+fluentbit::parsers_file: '/etc/td-agent-bit/parsers.conf'
+fluentbit::parsers:
+
+  - name:   'apache'
+    format: 'regex'
+    regex:  '^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$'
+    time_key: 'time'
+    time_format: '%d/%b/%Y:%H:%M:%S %z'
+
+  - name:   'apache2'
+    format: 'regex'
+    regex:  '^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^ ]*) +\S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>.*)")?$'
+    time_key: 'time'
+    time_format: '%d/%b/%Y:%H:%M:%S %z'
+
+  - name:   'apache_error'
+    format: 'regex'
+    regex:  '^\[[^ ]* (?<time>[^\]]*)\] \[(?<level>[^\]]*)\](?: \[pid (?<pid>[^\]]*)\])?( \[client (?<client>[^\]]*)\])? (?<message>.*)$'
+
+  - name:   'nginx'
+    format: 'regex'
+    regex: '^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")'
+    time_key: 'time'
+    time_format: '%d/%b/%Y:%H:%M:%S %z'
+
+  - name:        'k8s-nginx-ingress'
+    format:      'regex'
+    regex:       '^(?<host>[^ ]*) - \[(?<real_ip>[^ ]*)\] - (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*) "(?<referer>[^\"]*)" "(?<agent>[^\"]*)" (?<request_length>[^ ]*) (?<request_time>[^ ]*) \[(?<proxy_upstream_name>[^ ]*)\] (?<upstream_addr>[^ ]*) (?<upstream_response_length>[^ ]*) (?<upstream_response_time>[^ ]*) (?<upstream_status>[^ ]*) (?<last>[^$]*)'
+    time_key:    'time'
+    time_format: '%d/%b/%Y:%H:%M:%S %z'
+
+  - name:   'json'
+    format: 'json'
+    time_key: 'time'
+    time_format: '%d/%b/%Y:%H:%M:%S %z'
+
+  - name:         'docker'
+    format:       'json'
+    time_key:     'time'
+    time_format:  '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep:    true
+
+  - name:        'docker-daemon'
+    format:      'regex'
+    regex:       'time="(?<time>[^ ]*)" level=(?<level>[^ ]*) msg="(?<msg>[^ ].*)"'
+    time_key:    'time'
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep:   true
+
+  - name:        'syslog-rfc5424'
+    format:      'regex'
+    regex:       '^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$'
+    time_key:    'time'
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep:   true
+
+  - name:        'syslog-rfc3164-local'
+    format:      'regex'
+    regex:       '^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$'
+    time_key:    'time'
+    time_format: '%b %d %H:%M:%S'
+    time_keep:   true
+
+  - name:        'syslog-rfc3164'
+    format:      'regex'
+    regex:       '/^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$/'
+    time_key:    'time'
+    time_format: '%b %d %H:%M:%S'
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep:   true
+
+  - name:    'mongodb'
+    format:  'regex'
+    regex:   '^(?<time>[^ ]*)\s+(?<severity>\w)\s+(?<component>[^ ]+)\s+\[(?<context>[^\]]+)]\s+(?<message>.*?) *(?<ms>(\d+))?(:?ms)?$'
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep:   true
+    time_key: 'time'
+
+  - name: 'cri'
+    format: 'regex'
+    regex: '^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$'
+    time_key:    'time'
+    time_format: '%Y-%m-%dT%H:%M:%S.%L%z'
+
+  - name:    'kube-custom'
+    format:  'regex'
+    regex:   '(?<tag>[^.]+)?\.?(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$'
+
+  - name: 'cinder'
+    format: 'regex'
+    regex: '^(?<log_time>[^ ][-.\d\+:T]+[ ]*[.:\d]*)\s+(?<pid>[^ ]\d+)\s+(?<severity>[^ ][.-_\w]+)\s+(?<component>[^ ][.-_\w]+)(\s+\[(-|(?<req_id>[^ ][-\w]*) (?<req_user>[^ ][-\w]*) (?<req_project>[^ ][-\w]*) (?<req_domain>[^ ][-\w]*) (?<req_user_domain>[^ ][-\w]*) (?<req_project_domain>[^ ][-\w]*))\]){1}\s+(?<message>.*)$'
+    time_format: '%Y-%m-%d %H:%M:%S.%L'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'glance'
+    format: 'regex'
+    regex: '^(?<log_time>[^ ][-.\d\+:T]+[ ]*[.:\d]*)\s+(?<pid>[^ ]\d+)\s+(?<severity>[^ ][.-_\w]+)\s+(?<component>[^ ][.-_\w]+)(\s+\[(-|(?<req_id>[^ ][-\w]*) (?<req_user>[^ ][-\w]*) (?<req_project>[^ ][-\w]*) (?<req_domain>[^ ][-\w]*) (?<req_user_domain>[^ ][-\w]*) (?<req_project_domain>[^ ][-\w]*))\]){1}\s+(?<message>.*)$'
+    time_format: '%Y-%m-%d %H:%M:%S.%L'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'heat'
+    format: 'regex'
+    regex: '^(?<log_time>[^ ][-.\d\+:T]+[ ]*[.:\d]*)\s+(?<pid>[^ ]\d+)\s+(?<severity>[^ ][.-_\w]+)\s+(?<component>[^ ][.-_\w]+)(\s+\[(-|(?<req_id>[^ ][-\w]*) (?<req_user>[^ ][-\w]*) (?<req_project>[^ ][-\w]*) (?<req_domain>[^ ][-\w]*) (?<req_user_domain>[^ ][-\w]*) (?<req_project_domain>[^ ][-\w]*))\]){1}\s+(?<message>.*)$'
+    time_format: '%Y-%m-%d %H:%M:%S.%L'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'keystone'
+    format: 'regex'
+    regex: '^(?<log_time>[^ ][-.\d\+:T]+[ ]*[.:\d]*)\s+(?<pid>[^ ]\d+)\s+(?<severity>[^ ][.-_\w]+)\s+(?<component>[^ ][.-_\w]+)(\s+\[(-|(?<req_id>[^ ][-\w]*) (?<req_user>[^ ][-\w]*) (?<req_project>[^ ][-\w]*) (?<req_domain>[^ ][-\w]*) (?<req_user_domain>[^ ][-\w]*) (?<req_project_domain>[^ ][-\w]*))\]){1}\s+(?<message>.*)$'
+    time_format: '%Y-%m-%d %H:%M:%S.%L'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'neutron'
+    format: 'regex'
+    regex: '^(?<log_time>[^ ][-.\d\+:T]+[ ]*[.:\d]*)\s+(?<pid>[^ ]\d+)\s+(?<severity>[^ ][.-_\w]+)\s+(?<component>[^ ][.-_\w]+)(\s+\[(-|(?<req_id>[^ ][-\w]*) (?<req_user>[^ ][-\w]*) (?<req_project>[^ ][-\w]*) (?<req_domain>[^ ][-\w]*) (?<req_user_domain>[^ ][-\w]*) (?<req_project_domain>[^ ][-\w]*))\]){1}\s+(?<message>.*)$'
+    time_format: '%Y-%m-%d %H:%M:%S.%L'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'nova'
+    format: 'regex'
+    regex: '^(?<log_time>[^ ][-.\d\+:T]+[ ]*[.:\d]*)\s+(?<pid>[^ ]\d+)\s+(?<severity>[^ ][.-_\w]+)\s+(?<component>[^ ][.-_\w]+)(\s+\[(-|(?<req_id>[^ ][-\w]*) (?<req_user>[^ ][-\w]*) (?<req_project>[^ ][-\w]*) (?<req_domain>[^ ][-\w]*) (?<req_user_domain>[^ ][-\w]*) (?<req_project_domain>[^ ][-\w]*))\]){1}\s+(?<message>.*)$'
+    time_format: '%Y-%m-%d %H:%M:%S.%L'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'crowbar'
+    format: 'regex'
+    regex: '^.*\[(?<log_time>[^ ][-.\d\+:]+T[:\d]*)([^\]])*?\]\s+?(?<severity>[^ ]\w+)([\s-]*):?\s+(?<message>.*)'
+    time_format: '%Y-%m-%dT%H:%M:%S'
+    time_keep: false
+    time_key: 'log_time'
+
+  - name: 'chefclient'
+    format: 'regex'
+    regex: '^\[(?<log_time>[^ ][-.\d\+:]+T[:\d]*)([^\]])*?\]\s+(?<severity>[^ ]\w+):\s+(?<message>.*)$'
+    time_format: '%Y-%m-%dT%H:%M:%S'
+    time_keep: false
+    time_key: 'log_time'
+
+  - name: 'mysql_error'
+    format: 'regex'
+    regex: '^(?<log_time>[^ +][-\d]+[\ T]*[:\dZ]+)\s*(?<myid>[^ ]\d+)\s+\[(?<severity>[^ ]\w+)\](\s+(?<subsystem>[^ ]\w+):){0,1}\s+(?<message>.*)$'
+    time_format: '%Y-%m-%d %H:%M:%S'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'mysql_slow'
+    format: 'regex'
+    regex: '^# User\@Host:\s+(?<user>[^\@][\w\[\]]+)[@\s]+(?<dbhost>[^ ][-.\w]+)\s+(\[(?<dbhost_address>[.\d]+)\]){0,1}\s+(?<message>.*)$'
+
+  - name: 'pacemaker'
+    format: 'regex'
+    regex: '^\s*(?<log_time>[^ ]* {1,2}[^ ]* [^ ]*) \[(?<pid>\d+)\] (?<node>[\-\w]*)\s*(?<component>\w*):\s+(?<severity>\w+):\s+(?<message>.*)$'
+    time_format: '%b %d %H:%M:%S'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'rabbitmq'
+    format: 'regex'
+    regex: '^=(?<severity>[^ ]\w+)\s+REPORT[=\s]*(?<log_time>[^ =][-:.\d\w]+)[\s=]+(?<message>.*)$'
+    time_format: '%d-%b-%Y::%H:%M:%S'
+    time_keep:   false
+    time_key: 'log_time'
+
+  - name: 'universal'
+    format: 'regex'
+    regex: '^(?<message>.*)$'
+
+  - name: 'uuid'
+    format: 'regex'
+    regex: '(?<uuid>[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})'
+
+  - name: 'ceph'
+    format: 'regex'
+    regex: '^(?<log_time>[^ ][-.\d\+:T]+[ ]*[.:\d]*)\s+(?<message>.*)$'
+    time_format: '%Y-%m-%d %H:%M:%S.%L'
+    time_keep: false
+    time_key: 'log_time'
+
+  - name:        'java_multiline'
+    format:      'regex'
+    regex:       '/^(?<time>\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) \[(?<thread>.*)\] (?<level>[^\s]+)(?<message>.*)/'
+    time_key:    'time'
+    time_format: '%Y-%m-%d %H:%M:%S'
