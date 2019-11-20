@@ -1,6 +1,4 @@
-# @summary A short summary of the purpose of this class
-#
-# A description of what this class does
+# @summary Plugin to output logs to a configured elasticsearch instance
 #
 # @param configfile
 #  Path to the output configfile. Naming should be output_*.conf to make sure
@@ -85,5 +83,6 @@ define fluentbit::output::es(
     mode    => '0644',
     content => template('fluentbit/output/es.conf.erb'),
     notify  => Class['fluentbit::service'],
+    require => Class['fluentbit::install'],
   }
 }

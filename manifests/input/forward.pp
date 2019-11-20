@@ -32,5 +32,6 @@ define fluentbit::input::forward (
     mode    => '0644',
     content => template('fluentbit/input/forward.conf.erb'),
     notify  => Class['fluentbit::service'],
+    require => Class['fluentbit::install'],
   }
 }
