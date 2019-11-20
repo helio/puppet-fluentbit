@@ -1,0 +1,77 @@
+# Managed by puppet
+[INPUT]
+    Name              tail
+<% if @routing_tag -%>
+    Tag               <%= @routing_tag %>
+<% end -%>
+<% if @storage_type -%>
+    storage.type      <%= @storage_type %>
+<% end -%>
+<% if @buffer_max_size -%>
+    Buffer_Max_Size   <%= @buffer_max_size %>
+<% end -%>
+<% if @buffer_chunk_size -%>
+    Buffer_Chunk_Size <%= @buffer_chunk_size %>
+<% end -%>
+<% if @path -%>
+    Path              <%= @path %>
+<% end -%>
+<% if @path_key -%>
+    Path_Key          <%= @path_key %>
+<% end -%>
+<% if @refresh_interval -%>
+    Refresh_Interval  <%= @refresh_interval %>
+<% end -%>
+<% if @rotate_wait -%>
+    Rotate_Wait       <%= @rotate_wait %>
+<% end -%>
+<% if @ignore_older -%>
+    Ignore_Older      <%= @ignore_older %>
+<% end -%>
+<% if @skip_long_lines_string -%>
+    Skip_Long_Lines   <%= @skip_long_lines_string %>
+<% end -%>
+<% if @db -%>
+    DB                <%= @db %>
+<% end -%>
+<% if @db_sync -%>
+    DB.Sync           <%= @db_sync %>
+<% end -%>
+<% if @mem_buf_limit -%>
+    Mem_Buf_Limit     <%= @mem_buf_limit %>
+<% end -%>
+<% if @key -%>
+    Key               <%= @key %>
+<% end -%>
+<% if @tag -%>
+    Tag               <%= @tag %>
+<% end -%>
+<% if @tag_regex -%>
+    Tag_Regex         <%= @tag_regex %>
+<% end -%>
+<% if @multiline_flush -%>
+    Multiline_Flush   <%= @multiline_flush %>
+<% end -%>
+<% if @docker_mode_string -%>
+    Docker_Mode       <%= @docker_mode_string %>
+<% end -%>
+<% if @docker_mode_flush -%>
+    Docker_Mode_Flush <%= @docker_mode_flush %>
+<% end -%>
+<% unless @exclude_path.empty? -%>
+    Exclude_Path      <%= @exclude_path.join(',') %>
+<% end -%>
+<% if @multiline -%>
+    Multiline         On
+  <%- unless @parsers.empty? -%>
+    Parser_Firstline  <%= @parsers.shift %>
+    <%- @parsers.each_with_index do |parser, index| -%>
+    Parser_<%= (index + 1) -%>  <%= parser %>
+    <%- end -%>
+  <%- end -%>
+<% else -%>
+    Multiline         Off
+  <%- unless @parsers.empty? -%>
+    Parser            <%= @parsers.first %>
+  <%- end -%>
+<% end -%>
