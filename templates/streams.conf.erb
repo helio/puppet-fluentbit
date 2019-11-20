@@ -1,0 +1,8 @@
+# Managed by puppet
+<% @streams.each do |stream| -%>
+[STREAM_TASK]
+    Name   <%= stream['name'] %>
+    Exec   <%= stream['exec'] %>
+
+<% end -%>
+# <%= @streams.length %> streams

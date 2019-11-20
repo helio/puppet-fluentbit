@@ -65,22 +65,20 @@
 #  Prefix keys with this string
 # @example
 #  include fluentbit::output::es
-define fluentbit::output::es(
-  String $configfile            = '/etc/td-agent-bit/output_es.conf',
+define fluentbit::output::es (
+  String $configfile            = "/etc/td-agent-bit/output_es_${name}.conf",
   String $match                 = '*',
-  String $host                  = '127.0.0.1',
-  Integer $port                 = 9200,
+  Stdlib::Host $host            = '127.0.0.1',
+  Stdlib::Port $port            = 9200,
   String $index                 = 'fluentbit',
   String $type                  = 'flb_type',
   Enum['on', 'off'] $tls        = 'off',
   Optional[String] $http_user   = undef,
   Optional[String] $http_passwd = undef,
 ) {
-  # create output_es.conf
-  # TODO: concat for multiple entries
   file { $configfile:
     ensure  => file,
-    mode    => '0644',
+    mode    => $fluentbit::config_file_mode,
     content => template('fluentbit/output/es.conf.erb'),
     notify  => Class['fluentbit::service'],
     require => Class['fluentbit::install'],

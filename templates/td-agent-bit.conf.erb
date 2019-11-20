@@ -1,35 +1,32 @@
 # Managed by puppet
-# td agent bit config file include all other config files
+<% @variables.each do |key, value| -%>
+@SET <%= key %>=<%= value %>
+<% end -%>
+
 [SERVICE]
-    # configure service<% if @flush %>
-    Flush           <%= @flush -%>
-    <% end -%>
-    <% if @daemon == 'on' %>
-    Daemon          <%= @daemon -%>
-    <% end -%>
-    <% if @log_file %>
-    Log_File        <%= @log_file -%>
-    <% end -%>
-    <% if @log_level %>
-    Log_Level       <%= @log_level -%>
-    <% end -%>
-    <% if @parsers_file %>
-    Parsers_File    <%= @parsers_file -%>
-    <% end -%>
-    <% if @plugins_file %>
-    Plugin_File     <%= @plugins_file -%>
-    <% end -%>
-    <% if @streams_file %>
-    Streams_file    <%= @streams_file -%>
-    <% end -%>
-    <% if @http_server == 'on' %>
-    HTTP_Server     <%= @http_server -%>
-    HTTP_Listen     <%= @http_listen -%>
-    HTTP_Port       <%= @http_port -%>
-    <% end -%>
-    <% if @coro_stack_size %>
-    Coro_Stack_Size <%= @coro_stack_size -%>
-    <% end %>
+    Flush                     <%= @flush %>
+    Daemon                    <%= @daemon %>
+<% if @log_file %>
+    Log_File                  <%= @log_file %>
+<% end -%>
+    Log_Level                 <%= @log_level %>
+    Parsers_File              <%= @parsers_file %>
+    Plugin_File               <%= @plugins_file %>
+    Streams_file              <%= @streams_file %>
+    HTTP_Server               <%= @http_server %>
+    HTTP_Listen               <%= @http_listen %>
+    HTTP_Port                 <%= @http_port %>
+    Coro_Stack_Size           <%= @coro_stack_size %>
+    storage.checksum          <%= @storage_checksum %>
+<% if @storage_path %>
+    storage.path              <%= @storage_path %>
+<% end -%>
+<% if @storage_sync %>
+    storage.sync              <%= @storage_sync %>
+<% end -%>
+<% if @storage_backlog_mem_limit %>
+    storage.backlog.mem_limit <%= @storage_backlog_mem_limit %>
+<% end -%>
 
 @INCLUDE input_*.conf
 @INCLUDE output_*.conf
