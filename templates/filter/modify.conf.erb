@@ -1,48 +1,63 @@
 # Managed by puppet
-# Filter to modify output
 [FILTER]
-    # configure plugins
-    Name  modify<%- if @match %>
-    Match <%= @match -%>
+    Name                                                modify
+<% if @match -%>
+    Match                                               <%= @match %>
 <% end -%>
-<% if @set %>
-<% @set.each do |key, value| %>
-    Set <%= key %> <%= value -%>
+<% @key_exists.each do |key| -%>
+    Condition Key_exists                                <%= key %>
 <% end -%>
+<% @key_does_not_exist.each do |key| -%>
+    Condition Key_does_not_exist                        <%= key %>
 <% end -%>
-<% if @add -%>
-<%- @add.each do |key, value| %>
-    Add <%= key %> <%= value -%>
+<% @a_key_matches.each do |key| -%>
+    Condition A_key_matches                             <%= key %>
 <% end -%>
+<% @no_key_matches.each do |key| -%>
+    Condition No_key_matches                            <%= key %>
 <% end -%>
-<% if @remove -%>
-<%- @remove.each do |key, value| %>
-    Remove <%= key %> <%= value -%>
+<% @key_value_equals.each do |key, value| -%>
+    Condition Key_value_equals                          <%= key %> <%= value %>
 <% end -%>
+<% @key_value_does_not_equal.each do |key, value| -%>
+    Condition Key_value_does_not_equal                  <%= key %> <%= value %>
 <% end -%>
-<%- if @remove_wildcard %>
-    Remove_wildcard <%= @remove_wildcard -%>
+<% @key_value_matches.each do |key, value| -%>
+    Condition Key_value_matches                         <%= key %> <%= value %>
 <% end -%>
-<%- if @remove_regex %>
-    Remove_regex <%= @remove_regex -%>
+<% @key_value_does_not_match.each do |key, value| -%>
+    Condition Key_value_does_not_match                  <%= key %> <%= value %>
 <% end -%>
-<% if @rename -%>
-<%- @rename.each do |key, value| %>
-    Rename <%= key %> <%= value -%>
+<% @matching_keys_have_matching_values.each do |key, value| -%>
+    Condition Matching_keys_have_matching_values        <%= key %> <%= value %>
 <% end -%>
+<% @matching_keys_do_not_have_matching_values.each do |key, value| -%>
+    Condition Matching_keys_do_not_have_matching_values <%= key %> <%= value %>
 <% end -%>
-<% if @hard_rename -%>
-<%- @hard_rename.each do |key, value| %>
-    Hard_rename <%= key %> <%= value -%>
+<% Hash(@set).each do |key, value| -%>
+    Set                                                 <%= key %> <%= value %>
 <% end -%>
+<% Hash(@add).each do |key, value| -%>
+    Add                                                 <%= key %> <%= value %>
 <% end -%>
-<% if @copy -%>
-<%- @copy.each do |key, value| %>
-    Copy <%= key %> <%= value -%>
+<% Array(@remove).each do |key| -%>
+    Remove                                              <%= key %>
 <% end -%>
+<% Array(@remove_wildcard).each do |key| -%>
+    Remove_wildcard                                     <%= key %>
 <% end -%>
-<% if @hard_copy -%>
-<%- @hard_copy.each do |key, value| %>
-    Hard_copy <%= key %> <%= value -%>
+<% Array(@remove_regex).each do |key| -%>
+    Remove_regex                                        <%= key %>
 <% end -%>
+<% Hash(@rename).each do |key, value| -%>
+    Rename                                              <%= key %> <%= value %>
+<% end -%>
+<% Hash(@hard_rename).each do |key, value| -%>
+    Hard_rename                                         <%= key %> <%= value %>
+<% end -%>
+<% Hash(@copy).each do |key, value| -%>
+    Copy                                                <%= key %> <%= value %>
+<% end -%>
+<% Hash(@hard_copy).each do |key, value| -%>
+    Hard_copy                                           <%= key %> <%= value %>
 <% end -%>
