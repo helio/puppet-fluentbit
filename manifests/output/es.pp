@@ -66,7 +66,7 @@
 # @example
 #  include fluentbit::output::es
 define fluentbit::output::es (
-  String $configfile            = "/etc/td-agent-bit/output_es_${name}.conf",
+  Stdlib::Absolutepath $configfile = "/etc/td-agent-bit/plugins.d/output_es_${name}.conf",
   String $match                 = '*',
   Stdlib::Host $host            = '127.0.0.1',
   Stdlib::Port $port            = 9200,
