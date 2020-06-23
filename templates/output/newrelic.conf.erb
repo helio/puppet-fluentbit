@@ -1,0 +1,36 @@
+# Managed by puppet
+[OUTPUT]
+    Name  newrelic
+<%- if @match -%>
+    Match <%= @match %>
+<% end -%>
+<%- if @licenseKey -%>
+    licenseKey <%= @licenseKey %>
+<% end -%>
+<%- if @maxBufferSize -%>
+    maxBufferSize <%= @maxBufferSize %>
+<% end -%>
+<%- if @maxRecords -%>
+    maxRecords <%= @maxRecords %>
+<% end -%>
+<%- if @endpoint -%>
+    endpoint <%= @endpoint %>
+<% end -%>
+<%- if @apiKey -%>
+    apiKey <%= @apiKey %>
+<% end -%>
+<%- if @proxy -%>
+    proxy <%= @proxy %>
+<% end -%>
+<%- if @ignoreSystemProxy -%>
+    ignoreSystemProxy <%= @ignoreSystemProxy %>
+<% end -%>
+<%- if @caBundleFile -%>
+    caBundleFile <%= @caBundleFile %>
+<% end -%>
+<%- if @caBundleDir -%>
+    caBundleDir <%= @caBundleDir %>
+<% end -%>
+<%- if @validateProxyCerts -%>
+    validateProxyCerts <%= @validateProxyCerts %>
+<% end -%>
