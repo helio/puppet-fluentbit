@@ -9,6 +9,9 @@ class fluentbit::repo {
       'Debian': {
         contain '::fluentbit::repo::debian'
       }
+      'RedHat': {
+        contain '::fluentbit::repo::redhat'
+      }
       default: {
         fail("${module_name} module doesn't support ${facts['os']['family']}")
       }
