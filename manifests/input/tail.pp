@@ -10,6 +10,9 @@
 # @param path
 #   Pattern specifying a specific log files or multiple ones through the use of common wildcards.
 #
+# @param monitoring_alias
+#   Set an alias for the input for the purpose of monitoring clarity.
+#
 # @param routing_tag
 #   Set a tag (with regex-extract fields) that will be placed on lines read.
 #
@@ -84,6 +87,7 @@
 define fluentbit::input::tail (
   Stdlib::Absolutepath $path,
   Stdlib::Absolutepath $configfile                          = "/etc/td-agent-bit/input_tail_${name}.conf",
+  Optional[String[1]] $monitoring_alias                     = undef,
   Optional[String[1]] $routing_tag                          = undef,
   Optional[Enum['memory', 'filesystem']] $storage_type      = undef,
 

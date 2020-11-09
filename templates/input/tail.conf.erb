@@ -1,6 +1,9 @@
 # Managed by puppet
 [INPUT]
     Name              tail
+<% if @monitoring_alias -%>
+    Alias             <%= @monitoring_alias %>
+<% end -%>
 <% if @routing_tag -%>
     Tag               <%= @routing_tag %>
 <% end -%>
