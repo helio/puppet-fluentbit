@@ -188,7 +188,7 @@ class fluentbit (
   contain fluentbit::repo
   contain fluentbit::install
   contain fluentbit::config
-  contain fluentbit::service
+  include fluentbit::service
 
   Class['::fluentbit::repo']
     -> Class['::fluentbit::install']
