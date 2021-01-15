@@ -1,0 +1,8 @@
+# Managed by puppet
+# Filter to modify output
+[FILTER]
+    # configure plugins
+    Name          lua
+    Match         <%= @match %>
+    script        <%= @script %>
+    call          <%= @call %>

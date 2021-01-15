@@ -774,6 +774,15 @@ Wait period time in seconds to flush queued unfinished split lines.
 
 Default value: `undef`
 
+##### `read_from_head`
+
+Data type: `Boolean`
+
+For new discovered files on start (without a database offset/position), read the content from the head of the file, not tail.
+
+Default value: `false`
+
+
 ### fluentbit::output::es
 
 Plugin to output logs to a configured elasticsearch instance

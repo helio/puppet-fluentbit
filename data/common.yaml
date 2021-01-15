@@ -103,17 +103,16 @@ fluentbit::parsers:
 
   - name:        'syslog-rfc3164-local'
     format:      'regex'
-    regex:       '^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$'
+    regex:       '^(?:\<(?<pri>[0-9]+)\>)?(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$'
     time_key:    'time'
     time_format: '%b %d %H:%M:%S'
     time_keep:   true
 
   - name:        'syslog-rfc3164'
     format:      'regex'
-    regex:       '/^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$/'
+    regex:       '^(?:\<(?<pri>[0-9]+)\>)?(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$'
     time_key:    'time'
     time_format: '%b %d %H:%M:%S'
-    time_format: '%Y-%m-%dT%H:%M:%S.%L'
     time_keep:   true
 
   - name:    'mongodb'
