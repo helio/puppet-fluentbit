@@ -63,18 +63,38 @@
 #  Use current time for index generation instead of message record
 # @param logstash_prefix_key
 #  Prefix keys with this string
+# @param aws_auth
+# Enable AWS Sigv4 Authentication for Amazon ElasticSearch Service (On/Off)
+# @param aws_region
+# Specify the AWS region for Amazon ElasticSearch Service
+# @param aws_sts_endpoint
+# Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service
+# @param aws_role_arn
+# AWS IAM Role to assume to put records to your Amazon ES cluster
+# @param aws_external_id
+# External ID for the AWS IAM Role specified with aws_role_arn
+
 # @example
 #  include fluentbit::output::es
 define fluentbit::output::es (
-  String $configfile            = "/etc/td-agent-bit/output_es_${name}.conf",
-  String $match                 = '*',
-  Stdlib::Host $host            = '127.0.0.1',
-  Stdlib::Port $port            = 9200,
-  String $index                 = 'fluentbit',
-  String $type                  = 'flb_type',
-  Enum['on', 'off'] $tls        = 'off',
-  Optional[String] $http_user   = undef,
-  Optional[String] $http_passwd = undef,
+  String $configfile                            = "/etc/td-agent-bit/output_es_${name}.conf",
+  String $match                                 = '*',
+  Stdlib::Host $host                            = '127.0.0.1',
+  Stdlib::Port $port                            = 9200,
+  String $index                                 = 'fluentbit',
+  Optional[String] $type                        = undef,
+  Enum['On', 'Off', 'on', 'off'] $tls           = 'Off',
+  Optional[String] $http_user                   = undef,
+  Optional[String] $http_passwd                 = undef,
+  Optional[Enum['On', 'Off']] $logstash_format  = undef,
+  String $logstash_prefix                       = $index,
+  String $logstash_dateformat                   = '%Y.%m.%d',
+  Optional[Enum['On', 'Off']] $replace_dots     = undef,
+  Optional[Enum['On', 'Off']] $aws_auth         = undef,
+  Optional[String] $aws_region                  = undef,
+  Optional[String] $aws_sts_endpoint            = undef,
+  Optional[String] $aws_role_arn                = undef,
+  Optional[String] $aws_external_id             = undef, 
 ) {
   file { $configfile:
     ensure  => file,
